@@ -1,0 +1,23 @@
+.box {
+    width: 250px;
+    height: 250px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      justify-content: center;
+}
+
+.item-img {
+    width: 100px;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+.h1 {
+      text-align: center;
+}
+
