@@ -4,5 +4,5 @@ const base = process.env.BASE_PATH || '/';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/ReactStudy/' 
+   base: '/'
 })
