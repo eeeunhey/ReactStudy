@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import "./App.css";
 import Box from "./component/Box";
-import Button from "./component/Button";
 
 // 유저는 박스 두개를 볼 수 있다.(타이틀, 사진, 결과).
 // 유저는 박스 하단에 가위바위보 버튼을 볼 수 있다.
@@ -29,12 +28,17 @@ function App() {
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
   const [result, setResult] = useState("");
+  const [userscore, setUserScore] = useState(0);
+  const [computerScore, setComputerScore] = useState(0);
 
   const play = (userChoice) => {
     setUserSelect(choice[userChoice]);
     let computerChoice = randomChoice();
     setComputerSelect(computerChoice);
-    setResult(judgement(choice[userChoice], computerChoice));
+    let resultValue = judgement(choice[userChoice], computerChoice);
+    setResult(resultValue);
+    scoreCount(resultValue);
+    
   };
   const randomChoice = () => {
     let itemArray = Object.keys(choice);
@@ -58,11 +62,21 @@ function App() {
     // user === "paper", computer === "scissors"  user lose
     // user === "paper", computer === "rock"  user win
 
-    if(user.name === computer.name) {
-      return "tie"
-    } else if (user.name === "Rock") return computer.name=== "Scissors"? "WIN":"LOSE";
-    else if (user.name === "Scissors") return computer.name === "Paper"? "WIN":"LOSE";
-    else if (user.name === "Paper") return computer.name === "Rock"? "WIN":"LOSE";
+    if (user.name === computer.name) {
+      return "TIE";
+    } else if (user.name === "Rock")
+      return computer.name === "Scissors" ? "WIN" : "LOSE";
+    else if (user.name === "Scissors")
+      return computer.name === "Paper" ? "WIN" : "LOSE";
+    else if (user.name === "Paper")
+      return computer.name === "Rock" ? "WIN" : "LOSE";
+  };
+
+  const scoreCount = (result) => {
+    // if(result === "WIN") setUserScore(result +1);
+      if(result === "WIN") setUserScore((count) => count + 1);
+      if(result === "LOSE") setComputerScore((count) => count + 1);
+
   };
 
   // const play = (userChoice) =>{
@@ -70,16 +84,59 @@ function App() {
   // }
 
   return (
-    <div>
-      <div className="main">
-        <Box title="Your Choice" item={userSelect} result={result} />
-        <Box title="Computer's Choice" item={computerSelect} result={result} />
-      </div>
-      <div className="main">
-        <button onClick={() => play("scissors")}>가위</button>
-        <button onClick={() => play("rock")}>바위</button>
-        <button onClick={() => play("paper")}>보</button>
-        <Button />
+    <div className="rps">
+
+        <h1>Rock Paper Scissors GAME ✊🖐✌</h1>
+
+
+      <section className="rps_score">
+        <div className="score-card">
+          <span className="label">PLAYER</span>
+          <strong className="score" >
+            {userscore}
+          </strong>
+        </div>
+        <div className="vs">VS</div>
+        <div className="score-card">
+          <span className="label">COMPUTER</span>
+          <strong className="score" >
+            {computerScore}
+          </strong>
+        </div>
+      </section>
+      <section className="rps_choices">
+        <Box
+          title="PLAYER"
+          item={userSelect}
+          result={result}
+        />
+        <Box
+          title="COMPUTER"
+          item={computerSelect}
+          result={
+            !result
+              ? ""
+              : result === "WIN"
+              ? "LOSE"
+              : result === "LOSE"
+              ? "WIN"
+              : "TIE"
+          }
+        />
+      </section>
+      <section className="rps_buttons">
+        <button className="icon-btn brown" onClick={() => play("rock")}>
+          ✊
+        </button>
+        <button className="icon-btn blue" onClick={() => play("paper")}>
+          🖐
+        </button>
+        <button className="icon-btn orange" onClick={() => play("scissors")}>
+          ✌
+        </button>
+      </section>
+      <div className="rps_buttons">
+        <button class="pill-btn" >Reset Game</button>
       </div>
     </div>
   );
