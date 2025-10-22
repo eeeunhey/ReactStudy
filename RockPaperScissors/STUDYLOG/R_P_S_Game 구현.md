@@ -67,5 +67,24 @@
 12. useSlect 유저가 선택하기 전에 널 상태이다가 선택하면 값이 들어옴
 13. 처음에 그려야 하는데 널상태라서 에러를 발생 -> src={props.item && props.item.img} 수정하면 잘나옴
 14. 맨 처음 값 셋팅이 안되어있을경우 가드를 쓴다 null - false 리턴한다
-15. 
 
+### 컴퓨터 랜덤한 아이템 선택
+1. const [computerSelect, setComputerSelect] = useState();
+2. computer item ={computerSelect} 넣어준다
+3. 유저가 선택할 때! 컴퓨터는 랜덤한 값을 보여준다
+4. play(유저가 선택할 때 발생하니깐 여기 안에다 랜덤한 값을 넣어준다)
+5. let computerChoice = rendomChoice() 함수를 만들어서 넣어줌
+6. const radomChoice=()=> {}
+7. let randomItem = Math.random() console('random value', randomItem);
+8. 랜덤은 0과1사이의 값을 반환한다 -> 가위 바위 보 랑 어떻게 연결할 것인가
+9. 아이템과 숫자를 배열로 연결해보자
+10. let itemArray = Object.keys(choice); console.log("item array", itemArray)
+11. 위에 지정했던 오브젝트 객체의 키를 가져온다 (객체에 키값만 뽑아서 배열로 만들어 준다 ) 인덱스 번호를 부여되어있어서 인덱스 번호를 사용해보자
+12. Math.random() * itemArray.length; 를 곱하자
+13. 그럼 0.123  -> 2.123 인덱스 번호를 가져온다
+14. 뒤에 수를 버림 처리 한다Math.floor(Math.random() * itemArray.length) 
+15. 인덱스 번호를 해당 아이템 타이틀 가져오기 
+16. let final = itemArray[randomItem]
+17. console.log("final",final);
+18. 이제 리턴한다 리턴하면 위 play 안에 computerChoice에 값이 반환되어 들어간다
+19. 이제 바뀐 값에 대한 UI를 반환해야 하니깐 setComputerSelect(coimputerChoice)를 넣으면 바뀐 값에 대한 UI가 반영된다

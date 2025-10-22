@@ -1,0 +1,88 @@
+import { useState } from "react";
+import "./App.css";
+import Box from "./component/Box";
+import Button from "./component/Button";
+
+// 유저는 박스 두개를 볼 수 있다.(타이틀, 사진, 결과).
+// 유저는 박스 하단에 가위바위보 버튼을 볼 수 있다.
+// 버튼을 클릭하면 클릭한 아이템이 유저 박스에 보인다.
+// 버튼을 클릭하면 컴퓨터 아이템은 랜덤하게 선택이 된다.
+// 3번 4번의 아이템을 가지고 누가 이겼는지 승패를 나눈다.
+// 박스 테두리가 결과에 따라 색이 변한다. 지면 빨간색, 이기면 초록색, 비기면 검정색이 보인다.
+
+const choice = {
+  rock: {
+    name: "Rock",
+    img: "/img/Rock.png",
+  },
+  scissors: {
+    name: "Scissors",
+    img: "/img/Scissors.png",
+  },
+  paper: {
+    name: "Paper",
+    img: "/img/Paper.png",
+  },
+};
+
+function App() {
+  const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
+
+  const play = (userChoice) => {
+    setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
+  };
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice);
+    //console.log("item array",itemArray)
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    //console.log("random value", randomItem);
+    let final = itemArray[randomItem];
+    //console.log("final", final);
+    return choice[final];
+  };
+
+  const judgement = (user, computer) => {
+    console.log("user", user);
+    console.log("computer", computer);
+
+    //user === computer tie
+    // user === "rock", computer === "scissors"  user win
+    // user === "rock", computer === "paper"  user lose
+    // user === "scissors", computer === "rock"  user lose
+    // user === "scissors", computer === "paper"  user win
+    // user === "paper", computer === "scissors"  user lose
+    // user === "paper", computer === "rock"  user win
+
+    if(user.name === computer.name) {
+      return "tie"
+    } else if (user.name === "Rock") return computer.name=== "Scissors"? "WIN":"LOSE";
+    else if (user.name === "Scissors") return computer.name === "Paper"? "WIN":"LOSE";
+    else if (user.name === "Paper") return computer.name === "Rock"? "WIN":"LOSE";
+  };
+
+  // const play = (userChoice) =>{
+  //   console.log("선택됨", userChoice);
+  // }
+
+  return (
+    <div>
+      <div className="main">
+        <Box title="Your Choice" item={userSelect} result={result} />
+        <Box title="Computer's Choice" item={computerSelect} result={result} />
+      </div>
+      <div className="main">
+        <button onClick={() => play("scissors")}>가위</button>
+        <button onClick={() => play("rock")}>바위</button>
+        <button onClick={() => play("paper")}>보</button>
+        <Button />
+      </div>
+    </div>
+  );
+}
+
+export default App;
