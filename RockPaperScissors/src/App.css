@@ -11,6 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   background: linear-gradient(120deg, #ff774d22, #ffb86b22), var(--bg);
 }
 
@@ -200,6 +201,105 @@ body {
   border: 1px solid transparent;
   cursor: pointer;
   font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .rps {
+    max-width: 100%;
+    width: 100%;
+    margin: 24px auto;
+    padding: 16px;
+    transform: none;
+    transform-origin: initial;
+    gap: 12px;
+  }
+
+  .rps_header {
+    margin: 4px 0 8px;
+  }
+  .h1 {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+
+  .rps_score {
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    width: 100%;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 14px;
+    margin: 6px 0 12px;
+    position: relative;
+  }
+
+  .rps_score .score-card {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    width: auto;
+  }
+  .rps_score .score-card .label {
+    font-size: 11px;
+  }
+  .rps_score .score-card .score {
+    font-size: clamp(26px, 8vw, 34px);
+  }
+
+  .rps_score .vs {
+    width: 44px;
+    text-align: center;
+    margin: 0;
+    position: relative;
+  }
+  .rps_score .vs::before,
+  .rps_score .vs::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 1px;
+  }
+  .rps_score .vs::before {
+    left: 8px;
+  }
+  .rps_score .vs::after {
+    right: 8px;
+  }
+
+  .rps_choices {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 8px 0 14px;
+  }
+  .rps_choices .box {
+    width: 100%;
+    max-width: none;
+    .item-img {
+      width: clamp(72px, 22vw, 100px);
+    }
+
+    /* 버튼 영역 */
+    .rps_buttons {
+      gap: 12px;
+      margin: 12px 0 8px;
+      flex-wrap: nowrap;
+    }
+    .icon-btn {
+      width: clamp(58px, 18vw, 72px);
+      height: clamp(58px, 18vw, 72px);
+      font-size: clamp(22px, 6vw, 30px);
+    }
+
+    /* Reset 버튼 */
+    .pill-btn {
+      padding: 10px 14px;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+  }
 }
 
 /* .box.WIN  {  border: 5px solid green;  color: green; }
