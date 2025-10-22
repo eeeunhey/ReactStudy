@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import "./App.css";
 import Box from "./component/Box";
+import ScoreCard from "./component/ScoreCard";
 
 // 유저는 박스 두개를 볼 수 있다.(타이틀, 사진, 결과).
 // 유저는 박스 하단에 가위바위보 버튼을 볼 수 있다.
@@ -28,7 +29,7 @@ function App() {
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
   const [result, setResult] = useState("");
-  const [userscore, setUserScore] = useState(0);
+  const [userScore, setUserScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
 
   const play = (userChoice) => {
@@ -38,7 +39,6 @@ function App() {
     let resultValue = judgement(choice[userChoice], computerChoice);
     setResult(resultValue);
     scoreCount(resultValue);
-    
   };
   const randomChoice = () => {
     let itemArray = Object.keys(choice);
@@ -74,9 +74,16 @@ function App() {
 
   const scoreCount = (result) => {
     // if(result === "WIN") setUserScore(result +1);
-      if(result === "WIN") setUserScore((count) => count + 1);
-      if(result === "LOSE") setComputerScore((count) => count + 1);
+    if (result === "WIN") setUserScore((count) => count + 1);
+    if (result === "LOSE") setComputerScore((count) => count + 1);
+  };
 
+  const resetScore = () => {
+    setUserScore(0);
+    setComputerScore(0);
+    setComputerSelect(null);
+    setUserSelect(null);
+    setResult("");
   };
 
   // const play = (userChoice) =>{
@@ -85,31 +92,26 @@ function App() {
 
   return (
     <div className="rps">
-
+      <div className="rps_header">
         <h1>Rock Paper Scissors GAME ✊🖐✌</h1>
-
+      </div>
 
       <section className="rps_score">
-        <div className="score-card">
-          <span className="label">PLAYER</span>
-          <strong className="score" >
-            {userscore}
-          </strong>
-        </div>
+        <ScoreCard label="PLAYER" score={userScore} />
         <div className="vs">VS</div>
+        <ScoreCard label="COMPUTER" score={computerScore} />
+        {/* <div className="score-card">
+          <span className="label">PLAYER</span>
+          <strong className="score">{userScore}</strong>
+        </div>
+
         <div className="score-card">
           <span className="label">COMPUTER</span>
-          <strong className="score" >
-            {computerScore}
-          </strong>
-        </div>
+          <strong className="score">{computerScore}</strong>
+        </div> */}
       </section>
       <section className="rps_choices">
-        <Box
-          title="PLAYER"
-          item={userSelect}
-          result={result}
-        />
+        <Box title="PLAYER" item={userSelect} result={result} />
         <Box
           title="COMPUTER"
           item={computerSelect}
@@ -135,8 +137,10 @@ function App() {
           ✌
         </button>
       </section>
-      <div className="rps_buttons">
-        <button class="pill-btn" >Reset Game</button>
+            <div className="rps_buttons">
+        <button className="pill-btn" onClick={resetScore}>
+          Reset Game
+        </button>
       </div>
     </div>
   );
